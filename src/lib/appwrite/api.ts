@@ -340,27 +340,28 @@ export async function deletePost(postId: string, imageId: string, userId: string
   }
 }
 
-export async function getInfinitePosts({pageParams}: {pageParams: number}) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const queries: any[] = [Query.orderDesc('$updatedAt'), Query.limit(10)]
+// export async function getInfinitePosts({ pageParam }: { pageParam?: number }) {
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   const queries: any[] = [Query.orderDesc('$updatedAt'), Query.limit(10)];
 
-  if(pageParams) {
-    queries.push(Query.cursorAfter(pageParams.toString()))
-  }
+//   if (pageParam) {
+//     queries.push(Query.cursorAfter(pageParam.toString()));
+//   }
 
-  try {
-    const posts = databases.listDocuments(
-      appWriteConfig.databaseId,
-      appWriteConfig.postCollectionId,
-      queries
-    )
-    if(!posts) throw Error
+//   try {
+//     const posts = await databases.listDocuments(
+//       appWriteConfig.databaseId,
+//       appWriteConfig.postCollectionId,
+//       queries
+//     );
+//     if (!posts) throw new Error('Failed to fetch posts');
 
-    return posts
-  } catch (e) {
-    console.log(e)
-  }
-}
+//     return posts;
+//   } catch (e) {
+//     console.error(e);
+//     throw e; // Let React Query handle the error
+//   }
+// }
 
 export async function searchPosts(searchTerm: string) {
   
